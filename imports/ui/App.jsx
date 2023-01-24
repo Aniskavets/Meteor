@@ -13,8 +13,8 @@ const toggleChecked = ({ _id, isChecked }) => {
   Meteor.call('tasks.setIsChecked', _id, !isChecked);
 };
 
-export const App = () => {  
- 
+export const App = () => {
+
   const user = useTracker(() => Meteor.user());
 
   const [hideCompleted, setHideCompleted] = useState(false);
@@ -22,7 +22,7 @@ export const App = () => {
   const hideCompletedFilter = { isChecked: { $ne: true } };
 
   const userFilter = user ? { userId: user._id } : {};
-  
+
   const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
 
   const { tasks, pendingTasksCount, isLoading } = useTracker(() => {
@@ -47,9 +47,9 @@ export const App = () => {
 
     return { tasks, pendingTasksCount };
 
-    
+
   });
- 
+
   const pendingTasksTitle = `${
     pendingTasksCount ? ` (${pendingTasksCount})` : ''
   }`;
@@ -62,7 +62,7 @@ export const App = () => {
       <header>
         <div className="app-bar">
           <div className="app-header">
-            <h1>Моё первое приложение на Meteor, просто вау !!! Всего - {pendingTasksTitle} задач</h1>
+            <h1>Моё первое приложение на Meteor, просто вау !!!{pendingTasksCount > 0 ? `Всего - ${pendingTasksTitle} задач` : '' } </h1>
           </div>
         </div>
       </header>
@@ -70,7 +70,7 @@ export const App = () => {
       <div className="main">
         {user ? (
           <Fragment>
-            
+
            <div className="user" onClick={logout}>
           {user.username || user.profile.name} 🚪
         </div>
